@@ -1,0 +1,365 @@
+
+!
+! Last configuration change at 09:00:32 UTC Wed Mar 30 2011 by Francisco
+! NVRAM config last updated at 09:56:34 UTC Wed Mar 30 2011 by Francisco
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CD-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+username Francisco privilege 15 secret 5 $1$0MC.$gn0QwVHeKCPM44jlf3nm4/
+no aaa new-model
+switch 1 provision ws-c3750x-48p
+system mtu routing 1500
+ip routing
+!
+!
+no ip domain-lookup
+ip domain-name ccnp-lab.com
+ip device tracking
+vtp domain ccnp.lab
+vtp mode off
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 10-11,15 priority 24576
+spanning-tree vlan 12-14 priority 28672
+!
+!
+!
+!
+!
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name lan-users
+!
+vlan 11
+ name wlan-users
+!
+vlan 12
+ name voip
+!
+vlan 13
+ name servers
+!
+vlan 14
+ name sw-management
+!
+vlan 15
+ name wlc-management
+!
+vlan 99
+ name native
+!
+ip ssh version 2
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 192.168.3.3 255.255.255.255
+ ip ospf 1 area 1
+!
+interface Port-channel1
+ description ETHERCHANNEL TO CD-2
+ no switchport
+ ip address 172.20.0.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+!
+interface Port-channel2
+ description ETHERCHANNEL TO ACC-1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Port-channel3
+ description ETHERCHANNEL TO ACC-2
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Port-channel4
+ description ETHERCHANNEL TO ACC-3
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface FastEthernet0
+ no ip address
+ no ip route-cache
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ description Port-Channel 2 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/0/2
+ description Port-Channel 2 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/0/3
+ description Port-Channel 3 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/0/4
+ description Port-Channel 3 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/0/5
+ description Port-Channel 4 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/0/6
+ description Port-Channel 4 Interface
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 4 mode active
+!
+interface GigabitEthernet1/0/7
+ description Port-Channel 1 Interface
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/8
+ description Port-Channel 1 Interface
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/9
+!
+interface GigabitEthernet1/0/10
+!
+interface GigabitEthernet1/0/11
+ no switchport
+ ip address 172.20.0.6 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1/0/12
+!
+interface GigabitEthernet1/0/13
+!
+interface GigabitEthernet1/0/14
+!
+interface GigabitEthernet1/0/15
+!
+interface GigabitEthernet1/0/16
+!
+interface GigabitEthernet1/0/17
+!
+interface GigabitEthernet1/0/18
+!
+interface GigabitEthernet1/0/19
+!
+interface GigabitEthernet1/0/20
+!
+interface GigabitEthernet1/0/21
+!
+interface GigabitEthernet1/0/22
+!
+interface GigabitEthernet1/0/23
+!
+interface GigabitEthernet1/0/24
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface GigabitEthernet1/0/29
+!
+interface GigabitEthernet1/0/30
+!
+interface GigabitEthernet1/0/31
+!
+interface GigabitEthernet1/0/32
+!
+interface GigabitEthernet1/0/33
+!
+interface GigabitEthernet1/0/34
+!
+interface GigabitEthernet1/0/35
+!
+interface GigabitEthernet1/0/36
+!
+interface GigabitEthernet1/0/37
+!
+interface GigabitEthernet1/0/38
+!
+interface GigabitEthernet1/0/39
+!
+interface GigabitEthernet1/0/40
+!
+interface GigabitEthernet1/0/41
+!
+interface GigabitEthernet1/0/42
+!
+interface GigabitEthernet1/0/43
+!
+interface GigabitEthernet1/0/44
+!
+interface GigabitEthernet1/0/45
+!
+interface GigabitEthernet1/0/46
+!
+interface GigabitEthernet1/0/47
+!
+interface GigabitEthernet1/0/48
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+!
+interface GigabitEthernet1/1/3
+!
+interface GigabitEthernet1/1/4
+!
+interface TenGigabitEthernet1/1/1
+!
+interface TenGigabitEthernet1/1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 172.20.10.2 255.255.255.0
+ ip helper-address 192.168.1.1
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description MASTER_VLAN_LAN-USERS
+ vrrp 1 ip 172.20.10.1
+ vrrp 1 preempt delay minimum 60
+ vrrp 1 priority 110
+!
+interface Vlan11
+ ip address 172.20.11.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description MASTER_VLAN_WLAN-USERS
+ vrrp 1 ip 172.20.11.1
+ vrrp 1 preempt delay minimum 60
+ vrrp 1 priority 110
+!
+interface Vlan12
+ ip address 172.20.12.2 255.255.255.0
+ ip helper-address 192.168.1.1
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description SLAVE_VLAN_VOIP
+ vrrp 1 ip 172.20.12.1
+ vrrp 1 priority 90
+!
+interface Vlan13
+ ip address 172.20.13.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description SLAVE_VLAN_SERVERS
+ vrrp 1 ip 172.20.13.1
+ vrrp 1 priority 90
+!
+interface Vlan14
+ ip address 172.20.14.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description SLAVE_VLAN_SW-MANAGEMENT
+ vrrp 1 ip 172.20.14.1
+ vrrp 1 priority 90
+!
+interface Vlan15
+ ip address 172.20.15.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ vrrp 1 description MASTER_VLAN_WLC-MANAGEMENT
+ vrrp 1 ip 172.20.15.1
+ vrrp 1 preempt delay minimum 60
+ vrrp 1 priority 110
+!
+router ospf 1
+ router-id 192.168.3.3
+ auto-cost reference-bandwidth 40000
+ area 1 range 172.20.8.0 255.255.248.0
+ passive-interface default
+ no passive-interface GigabitEthernet1/0/11
+ no passive-interface Port-channel1
+!
+ip forward-protocol nd
+ip http server
+ip http secure-server
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+!
+end

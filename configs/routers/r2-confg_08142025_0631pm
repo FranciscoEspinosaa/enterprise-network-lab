@@ -1,0 +1,136 @@
+
+!
+! Last configuration change at 00:52:45 UTC Fri Aug 15 2025 by Francisco
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name ccnp-lab.com
+multilink bundle-name authenticated
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1523AHUG
+!
+!
+username Francisco privilege 15 secret 5 $1$8CaP$krBMgdD.SzvjUfHWZjF3O.
+!
+!
+ip ssh version 2
+!
+!
+!
+!
+interface Loopback0
+ ip address 192.168.2.2 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet0/0
+ ip address 172.20.0.14 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 172.20.0.9 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ ip address 172.20.0.17 255.255.255.252
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface Serial0/0/0
+ no ip address
+ shutdown
+ no fair-queue
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+router ospf 1
+ router-id 192.168.2.2
+ priority 90
+ log-adjacency-changes
+ auto-cost reference-bandwidth 40000
+ passive-interface default
+ no passive-interface GigabitEthernet0/0
+ no passive-interface GigabitEthernet0/1
+ default-information originate
+!
+router bgp 65200
+ bgp router-id 192.168.2.2
+ no bgp default ipv4-unicast
+ bgp log-neighbor-changes
+ neighbor 172.20.0.13 remote-as 65100
+ neighbor 172.20.0.18 remote-as 65300
+ !
+ address-family ipv4
+  no synchronization
+  network 172.20.0.8 mask 255.255.255.252
+  network 172.20.0.12 mask 255.255.255.252
+  network 172.20.0.16 mask 255.255.255.252
+  network 192.168.2.2 mask 255.255.255.255
+  redistribute ospf 1
+  neighbor 172.20.0.13 activate
+  neighbor 172.20.0.18 activate
+  no auto-summary
+ exit-address-family
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/2 172.20.0.18
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+ transport input all
+!
+scheduler allocate 20000 1000
+end
